@@ -13,14 +13,14 @@
                 <th>コメント</th>
             </tr>
             <tr>
-                <td>{{$results[0]->id}}</td>
-                <td><img src="{{asset('image/'.$results[0]->img_path)}}" height="300" width="300"></td>
-                <td>{{$results[0]->product_name}}</td>
-                <td>me-ka-</td>
-                <td>{{$results[0]->price}}</td>
-                <td>{{$results[0]->stock}}</td>
-                <td>{{$results[0]->comment}}</td>
-                <td><a href="{{route('productedit',$results[0]->id)}}"><input type="button" name="" id="" value="編集"></a></td>
+                <td>{{$results->products_id}}</td>
+                <td><img src="{{asset('image/'.$results->img_path)}}" height="300" width="300"></td>
+                <td>{{$results->product_name}}</td>
+                <td>{{$results->company_name}}</td>
+                <td>{{$results->price}}</td>
+                <td>{{$results->stock}}</td>
+                <td>{{$results->comment}}</td>
+                <td><a href="{{route('productedit',$results->products_id)}}"><input type="button" name="" id="" value="編集"></a></td>
             </tr>
         </table>
         <a href="{{route('product')}}"><input type="button" name="" id="" value="戻る"></a>

@@ -3,20 +3,30 @@
 @section('content')
         <div>商品一覧です。</div>
         <form action="{{ route('productsearch') }}" method="POST">
-        {{ csrf_field() }}
+        @csrf
         <div><input type="text" name="productName">商品名</div>
             <select name="company_select">
                 <option value="1">キットカット</option>
                 <option value="2">てすた！</option>
                 <option value="3">サンプル3</option>
             </select>
+            会社名
+            <br>
+            価格<input type="text" name="priceMax">上限
+            <input type="text" name="priceMin">下限
+            <br>
+            在庫<input type="text" name="stockMax">上限
+            <input type="text" name="stockMin">下限
+            <br>
             <input type="submit" value="検索">
         </form>
 
         <a href="{{ route('newproduct') }}"><input type="button" id="create_button" value="新規登録"></a>
         <table id="product">
             <tr>
-                <th>id</th>
+                <th>
+                    id
+                </th>
                 <th>商品画像</th>
                 <th>商品名</th>
                 <th>価格</th>
@@ -36,4 +46,8 @@
             </tr>
             @endforeach
         </table>
+
+        <script>
+
+        </script>
 @endsection

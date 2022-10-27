@@ -3,7 +3,7 @@
 @section('content')
         <title>商品情報編集画面</title>
         <form action="{{ route('editproduct') }}" method="POST">
-        {{ csrf_field() }}
+        @csrf
         <table>
             <tr>
                 <th>商品情報ID</th>
@@ -16,8 +16,8 @@
                 <th>更新ボタン</th>
             </tr>
             <tr>
-                <td><input type="text" name="id" value="{{$results[0]->id}}"></td>
-                <td><input type="text" name="productname" id="" value="{{$results[0]->product_name}}"></td>
+                <td><input type="text" name="id" value="{{$results->id}}"></td>
+                <td><input type="text" name="productname" id="" value="{{$results->product_name}}"></td>
                 <td>
                     <select name="company" id="">
                         <option value="1">メーカー1</option>
@@ -25,13 +25,13 @@
                         <option value="3">メーカー3</option>
                     </select>
                 </td>
-                <td><input type="text" name="price" id="" value="{{$results[0]->price}}"></td>
-                <td><input type="text" name="stock" id="" value="{{$results[0]->stock}}"></td>
-                <td><input type="text" name="comment" id="" value="{{$results[0]->comment}}"></td>
-                <td><input type="text" name="image" id="" value="{{$results[0]->img_path}}"></td>
+                <td><input type="text" name="price" id="" value="{{$results->price}}"></td>
+                <td><input type="text" name="stock" id="" value="{{$results->stock}}"></td>
+                <td><input type="text" name="comment" id="" value="{{$results->comment}}"></td>
+                <td><input type="text" name="image" id="" value="{{$results->img_path}}"></td>
                 <td><input type="submit" value="更新"></td>
             </tr>
         </table>
         </form>
-        <a href="{{route('productdetails',$results[0]->id)}}"><input type="button" name="" id="" value="戻る"></a>
+        <a href="{{route('productdetails',$results->id)}}"><input type="button" name="" id="" value="戻る"></a>
 @endsection
