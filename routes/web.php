@@ -31,7 +31,7 @@ Route::get('/productdetails/{id}', 'ProductController@productDetialsView')->name
 
 Route::get('/productedit/{id}', 'ProductController@productEditView')->name('productedit');
 
-Route::get('/productdelete/{id}','ProductController@productDelete')->name('productdelete');
+Route::post('/productdelete','ProductController@productDelete')->name('productdelete');
 
 // Route::get('/editproduct','ProductController@productEdit')->name('editproduct');
 
@@ -42,5 +42,7 @@ Route::get('/newproduct', 'ProductController@productNewView')->name('newproduct'
 Route::post('/productcreate', 'ProductController@productNewCreate')->name('productcreate');
 
 Route::post('/productsearch', 'ProductController@productSearch')->name('productsearch');
+
+Route::post('/productsort', 'ProductController@productSort')->name('productsort');
 
 });

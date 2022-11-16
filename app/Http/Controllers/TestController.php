@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
     public function func() {
-        return view('sample');
-      }
+        return view('test');
+    }
+
+    public function ajaxMessage(Request $request){
+      $data = $request->all();
+      $message = $data['text'];
+      return $message;
+    }
 }

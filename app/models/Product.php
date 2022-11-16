@@ -49,6 +49,7 @@ class Product extends Model
 
     //検索機能
     public function getSearchQuery(Request $req) {
+        // dd($req->productName);
         $product = \DB::table($this->table)->select(
             'products.id as products_id',
             'company_id',
@@ -90,7 +91,7 @@ class Product extends Model
             $product->where('price','<=',$req->priceMax)
             ->where('price','>=',$req->priceMin);
         }
-        if($req->company_select){
+        if($req->company_select && $req->company_select != 0){
             // dd($req->company_select);
             $product->where('companies.id',$req->company_select);
         }
@@ -102,13 +103,15 @@ class Product extends Model
 
 
     //削除機能
-    public function queryDelete($id){
+    public function queryDelete(Request $req){
+        // dd($req);
+        // dd($req->delid);
         DB::beginTransaction();
         try{
             $data = \DB::table($this->table)
-            ->where('id',$id)
+            ->where('id',$req->delid)
             ->delete();
-            
+            // dd($req->delid);
             DB::commit();
         }catch (\Exception $e){
             DB::rollback();
@@ -130,6 +133,7 @@ class Product extends Model
             'companies.id','=','products.company_id'
         )
         ->get();
+        // dd($product);
 
         return $product;
     }
@@ -150,8 +154,9 @@ class Product extends Model
             ]);
             DB::commit();
         } catch (\Exception $e) {
-            
             DB::rollback();
+            $sessionflashmessage = $e;//エラー文
+            return back();
         }
         return;
     }
@@ -219,5 +224,52 @@ class Product extends Model
         ->where('id',$req->id)
         ->first();
         return $results;
+    }
+
+    //商品ソート機能
+    public function sortProduct($req,$sorttype,$sortname){
+        $product = \DB::table($this->table)->select(
+            'products.id as products_id',
+            'company_id',
+            'product_name',
+            'price',
+            'stock',
+            'comment',
+            'img_path',
+            'company_name'
+        );
+        if($req->productName){
+            $product->where('product_name',$req->productName);
+        }
+        if($req->stockMin && $req->stockMax){
+            $product->where('stock','<=',$req->stockMax)
+            ->where('stock','>=',$req->stockMin);
+        }
+        if($req->priceMax && $req->priceMin){
+            $product->where('price','<=',$req->priceMax)
+            ->where('price','>=',$req->priceMin);
+        }
+        if($req->company_select && $req->company_select != 0){
+            $product->where('companies.id',$req->company_select);
+        }
+
+        $product = $product->leftjoin('companies','companies.id','=','products.company_id');
+
+        if($sortname){
+            if($sortname === 'id'){
+                $sortname = 'products_id';
+            }
+            if($sorttype === 'Asc'){
+                $product->orderBy($sortname,'asc');
+            }else if($sorttype === 'Desc'){
+                $product->orderBy($sortname,'desc');
+            }else {
+                $product = $product->get();
+                return $product;
+            }
+        }
+
+        $product = $product->get();
+        return $product;
     }
 }
